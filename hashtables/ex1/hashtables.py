@@ -17,6 +17,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.weights = [None] * capacity
 
 
 # Hash int
@@ -37,6 +38,7 @@ def hash_table_insert(hash_table, key, value):
     index = hash(key, len(hash_table.storage))
 
     current_pair = hash_table.storage[index]
+    hash_table.weights[index] = 0 if hash_table.weights[index] is not 0 else hash_table.weights[index] + value
     last_pair = None
 
     while current_pair is not None and current_pair.key != key:
@@ -89,6 +91,8 @@ def hash_table_retrieve(hash_table, key):
         if(current_pair.key == key):
             return current_pair.value
         current_pair = current_pair.next
+
+    return [hash_table.storage[index]] + [hash_table.weights[index]]
 
 
 # '''
